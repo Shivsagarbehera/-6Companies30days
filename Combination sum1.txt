@@ -1,23 +1,26 @@
 class Solution {
-    public int evalRPN(String[] tokens) {
-        Stack<Integer> st = new Stack<>();
-        for(String t : tokens){
-            if("+-*/".contains(t))
-              st.push(eval(st.pop(), st.pop(), t));
-            else
-              st.push(Integer.parseInt(t));
-        }
-     return st.pop();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> ds = new ArrayList<>();
 
+         helper(candidates,0,target,ans, ds);
+        return ans;
     }
-     private int eval(int b, int a, String op){
-            if("+".equals(op))
-            return a+b;
-            else if("-".equals(op))
-            return a-b;
-            else if("*".equals(op))
-            return a*b;
-            else
-            return a/b;
+    public void helper(int a[],int i, int T, List<List<Integer>> ans, List<Integer> ds){
+    
+             if(i == a.length){
+                if(T == 0){
+                    ans.add(new ArrayList<>(ds));
+                }
+                return;
+            }
+       helper(a,i + 1, T, ans, ds);
+         if(a[i] <= T){
+            ds.add(a[i]);
+            helper(a, i, T - a[i], ans,ds);
+            ds.remove(ds.size() -1);
         }
+      
+      
+    }
 }
